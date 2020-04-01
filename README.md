@@ -25,7 +25,8 @@ Tested on NVIDIA Jetson Nano
 
 ### Editing default model
 1. Make a copy and remane objectDetector_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo/) to your custom directory name.
-2. Edit Yolo DeepStream for your custom model (in your custom directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf). 
+2. Edit Yolo DeepStream for your custom model (in your custom directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
+3. Copy your obj.names file to labels.txt in your custom yolo directory.
 
 ##
 
