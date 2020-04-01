@@ -19,7 +19,7 @@ Tested on NVIDIA Jetson Nano
 ### Requirements
 * [NVIDIA DeepStream SDK](https://developer.nvidia.com/deepstream-sdk) >= 4
 * [OpenCV](https://opencv.org/releases.html) (if you want to [populate confidence](#populate-confidence); it's built-in in latest [NVIDIA JetPack](https://developer.nvidia.com/embedded/jetpack))
-* [Pre-treined YoloV3 model](https://github.com/AlexeyAB/darknet) (for NVIDIA Jetson Nano, I recommend YoloV3-Tiny-PRN (faster) or YoloV3-Tiny)
+* [Pre-treined YoloV3 model](https://github.com/AlexeyAB/darknet) (for NVIDIA Jetson Nano, I recommend YoloV3-Tiny)
 
 ##
 
@@ -27,7 +27,6 @@ Tested on NVIDIA Jetson Nano
 1. Make a copy and remane objectDetector_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo/) to your custom directory name.
 2. Edit Yolo DeepStream for your custom model (in your custom directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
 3. Copy your obj.names file to labels.txt in your custom yolo directory.
-4. If you using **yolov3-tiny-prn** model, replace yolo.cpp to my edited yolo.cpp (available in nvdsinfer_custom_impl_Yolo folder on this repository).
 
 ##
 
