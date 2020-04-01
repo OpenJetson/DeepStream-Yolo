@@ -37,7 +37,7 @@ batch-size=1
 network-mode=2
 # Number of classes in your custom model
 num-detected-classes=1
-# Interval of detection (keep >= 1 for real time detection)
+# Interval of detection (keep >= 1 for real time detection on NVIDIA Jetson Nano)
 interval=1
 gie-unique-id=1
 process-mode=1
