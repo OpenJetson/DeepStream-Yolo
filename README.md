@@ -94,7 +94,7 @@ subdivisions=1
 #batch=64
 #subdivisions=16
 ```
-2. If you using **yolov3-tiny-prn** model, comment/remove **ALL** [shortcut] sections of cfg file
+2. If you using **yolov3-tiny-prn** model, comment/remove **ALL** [shortcut] sections of cfg file (only for deepstream cfg file; for train, keep these lines uncommented; you can see examples in cfg directory)
 ```
 #[shortcut]
 #activation=leaky
