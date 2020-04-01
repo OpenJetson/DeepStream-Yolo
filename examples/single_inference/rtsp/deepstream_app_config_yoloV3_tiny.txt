@@ -27,7 +27,7 @@ perf-measurement-interval-sec=5
 [tiled-display]
 enable=1
 rows=1
-columns=1
+columns=1 
 width=1280
 height=720
 gpu-id=0
@@ -37,14 +37,18 @@ nvbuf-memory-type=0
 enable=1
 type=3
 uri=rtsp://192.168.1.2/Streaming/Channels/101/httppreview
+# Number of sources copy (if > 1, you need edit batch-size in streamux and config_infer_primary_yoloV3_tiny.txt)
 num-sources=1
 gpu-id=0
 cudadec-memtype=0
 
 [sink0]
 enable=1
+# 1=Fakesink, 2=EGL (nveglglessink), 3=Filesink, 4=RTSP, 5=Overlay (Jetson only)
 type=2
+# Indicates how fast the stream is to be rendered (0=As fast as possible 1=Synchronously)
 sync=0
+# The ID of the source whose buffers this sink must use
 source-id=0
 gpu-id=0
 nvbuf-memory-type=0
@@ -66,8 +70,11 @@ nvbuf-memory-type=0
 
 [streammux]
 gpu-id=0
+# Boolean property to inform muxer that sources are live
 live-source=1
+# Number of sources
 batch-size=1
+# Time out in usec, to wait after the first buffer is available to push the batch even if the complete batch is not formed
 batched-push-timeout=-1
 width=1920
 height=1080
