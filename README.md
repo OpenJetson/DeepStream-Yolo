@@ -1,5 +1,5 @@
 # DeepStream-Yolo
-NVIDIA DeepStream SDK configuration for YoloV3 model
+NVIDIA DeepStream SDK configuration for Yolo model
 
 Tested on NVIDIA Jetson Nano
 
@@ -9,8 +9,8 @@ Tested on NVIDIA Jetson Nano
 * [Editing default model](#editing-default-model)
 * [Compiling edited model](#compiling-edited-model)
 * [Editing yolo.cfg file](#editing-yolocfg-file)
-* [Understanding and editing deepstream_app_config_yoloV3_tiny.txt](#understanding-and-editing-deepstream_app_config_yolov3_tinytxt)
-* [Understanding and editing config_infer_primary_yoloV3_tiny.txt](#understanding-and-editing-config_infer_primary_yolov3_tinytxt)
+* [Understanding and editing deepstream_app_config](#understanding-and-editing-deepstream_app_config)
+* [Understanding and editing config_infer_primary](#understanding-and-editing-config_infer_primary)
 * [Testing model](#testing-model)
 * [FAQ](#faq)
 
@@ -24,9 +24,11 @@ Tested on NVIDIA Jetson Nano
 ##
 
 ### Editing default model
-1. Make a copy and remane objectDetector_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo/) to your custom directory name.
+1. Copy nvdsinfer_custom_impl_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo/) to your custom yolo directory.
 2. Edit Yolo DeepStream for your custom model (in your custom directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
-3. Copy your obj.names file to labels.txt in your custom yolo directory.
+3. Copy and remane your obj.names file to labels.txt in your custom yolo directory.
+4. Copy your yolo.cfg (v3, v3-tiny, etc.) file to your custom yolo directory.
+5. Copy config_infer_primary.txt and deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) or download my edited files (in examples folder, on this repository, if you using yolov3-tiny) to your custom yolo directory.
 
 ##
 
@@ -97,20 +99,20 @@ subdivisions=1
 
 ##
 
-### Understanding and editing deepstream_app_config_yoloV3_tiny.txt
-To understand and edit deepstream_app_config_yoloV3_tiny.txt file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%2520Development%2520Guide%2Fdeepstream_app_config.3.2.html)
+### Understanding and editing deepstream_app_config
+To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%2520Development%2520Guide%2Fdeepstream_app_config.3.2.html)
 * In this repository have example of deepstream_app_config_yoloV3_tiny.txt file.
 
 ##
 
-### Understanding and editing config_infer_primary_yoloV3_tiny.txt
-To understand and edit config_infer_primary_yoloV3_tiny.txt file, read the [DeepStream SDK Development Guide - Application Customization](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%2520Development%2520Guide%2Fdeepstream_custom_model.html)
+### Understanding and editing config_infer_primary
+To understand and edit config_infer_primary file, read the [DeepStream SDK Development Guide - Application Customization](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%2520Development%2520Guide%2Fdeepstream_custom_model.html)
 * In this repository have example of config_infer_primary_yoloV3_tiny.txt file.
 
 ##
 
 ### Testing model
-To run your custom yolo model, use this command (in your custom model directory):
+To run your custom yolo model, use this command (in your custom model directory; example for yolov3-tiny):
 ```
 deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 ```
