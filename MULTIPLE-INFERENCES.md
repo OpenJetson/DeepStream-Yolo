@@ -17,6 +17,31 @@ In example folder, in this repository, have config_infer and deepstream_app_conf
 
 ##
 
+### Editing nvdsinfer_context_impl.cpp
+To change folder where yolo.engine will be generated, is necessary to edit nvdsinfer_context_impl.cpp (lines 1672-1674) in /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer directory.
+Before:
+```
+            char *cwd = getcwd(NULL, 0);
+            engineFileName << cwd << "/model";
+            free(cwd);
+```
+After:
+```
+            std::string s = initParams.modelEngineFilePath;
+            size_t pos = s.rfind("/");
+            s.erase(pos);
+            //char *cwd = getcwd(NULL, 0);
+            engineFileName << s << "/model";
+            //free(cwd);
+```
+And compile it again (requires libopencv):
+```
+cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
+make and sudo make install
+```
+
+##
+
 ### Editing Makefile
 To compile nvdsinfer_custom_impl_Yolo without errors is necessary to edit Makefile (line 28), in nvdsinfer_custom_impl_Yolo folder in each inference directory.
 ```
