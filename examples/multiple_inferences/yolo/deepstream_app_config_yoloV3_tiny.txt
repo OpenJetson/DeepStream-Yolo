@@ -26,8 +26,10 @@ perf-measurement-interval-sec=5
 
 [tiled-display]
 enable=1
+# If you have 1 stream keep 1/1 (rows/columns), if you have 4 streams keep 2/2 (rows/columns)
 rows=1
-columns=1 
+columns=1
+# Resolution you want for the tiled display
 width=1280
 height=720
 gpu-id=0
