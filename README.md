@@ -25,7 +25,7 @@ Tested on NVIDIA Jetson Nano
 
 ### Editing default model
 1. Copy nvdsinfer_custom_impl_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo/) to your custom yolo directory.
-2. Edit Yolo DeepStream for your custom model (in your custom directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
+2. Edit Yolo DeepStream for your custom model (in your custom yolo directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
 3. Copy and remane your obj.names file to labels.txt in your custom yolo directory.
 4. Copy your yolo.cfg (v3, v3-tiny, etc.) file to your custom yolo directory.
 5. Copy config_infer_primary.txt and deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) or download my edited files (in examples folder, on this repository, if you using yolov3-tiny) to your custom yolo directory.
