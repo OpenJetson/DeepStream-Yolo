@@ -29,7 +29,7 @@ custom-network-config=pgie/yolov3-tiny.cfg
 model-file=yolov3-tiny.weights
 model-engine-file=model_b1_fp16.engine
 labelfile-path=labels.txt
-# Set 1 to populate confidence (requires libopecv and patch)
+# Set 1 to populate confidence (requires libopecv-dev and patch)
 enable-dbscan=1
 # Number of sources
 batch-size=1
