@@ -26,7 +26,7 @@ perf-measurement-interval-sec=5
 
 [tiled-display]
 enable=1
-# If you have 1 stream use 1/1 (rows/columns), if you have 4 streams use 2/2 (rows/columns)
+# If you have 1 stream use 1/1 (rows/columns), if you have 4 streams use 2/2 or 4/1 or 1/4 (rows/columns)
 rows=1
 columns=1
 # Resolution you want for the tiled display
