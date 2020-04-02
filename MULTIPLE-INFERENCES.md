@@ -19,6 +19,7 @@ In example folder, in this repository, have config_infer and deepstream_app_conf
 
 ### Editing nvdsinfer_context_impl.cpp
 To change folder where yolo.engine will be generated, is necessary to edit nvdsinfer_context_impl.cpp (lines 1672-1674) in /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer directory.
+
 Before:
 ```
             char *cwd = getcwd(NULL, 0);
@@ -82,26 +83,26 @@ subdivisions=1
 Example for primary (using fp16):
 ```
 custom-network-config=pgie/yolov3-tiny.cfg
-model-file=pgie/yolov3-tiny.weights
-model-engine-file=pgie/model_b1_fp16.engine
-labelfile-path=pgie/labels.txt
-custom-lib-path=pgie/nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
+model-file=yolov3-tiny.weights
+model-engine-file=model_b1_fp16.engine
+labelfile-path=labels.txt
+custom-lib-path=nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
 ```
 Example for secondary1 (using fp16):
 ```
 custom-network-config=sgie1/yolov3-tiny.cfg
-model-file=sgie1/yolov3-tiny.weights
-model-engine-file=sgie1/model_b16_fp16.engine
-labelfile-path=sgie1/labels.txt
-custom-lib-path=sgie1/nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
+model-file=yolov3-tiny.weights
+model-engine-file=model_b16_fp16.engine
+labelfile-path=labels.txt
+custom-lib-path=nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
 ```
 Example for secondary2 (using fp16):
 ```
 custom-network-config=sgie2/yolov3-tiny.cfg
-model-file=sgie2/yolov3-tiny.weights
-model-engine-file=sgie2/model_b16_fp16.engine
-labelfile-path=sgie2/labels.txt
-custom-lib-path=sgie2/nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
+model-file=yolov3-tiny.weights
+model-engine-file=model_b16_fp16.engine
+labelfile-path=labels.txt
+custom-lib-path=nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
 ```
 
 ##
