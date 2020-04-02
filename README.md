@@ -18,7 +18,8 @@ Tested on NVIDIA Jetson Nano
 
 ### Requirements
 * [NVIDIA DeepStream SDK](https://developer.nvidia.com/deepstream-sdk) >= 4
-* [OpenCV](https://opencv.org/releases.html) (if you want to [populate confidence](#populate-confidence); it's built-in in latest [NVIDIA JetPack](https://developer.nvidia.com/embedded/jetpack))
+* [OpenCV](https://opencv.org/releases.html) (if you want to [populate confidence](#populate-confidence); it's built-in in latest [NVIDIA JetPack](https://developer.nvidia.com/embedded/jetpack); sudo apt-get install libopencv-dev)
+* GStreamer-1.0 Development package and Base Plugins Development package (sudo apt-get install libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev)
 * [Pre-treined YoloV3 model](https://github.com/AlexeyAB/darknet) (for NVIDIA Jetson Nano, I recommend YoloV3-Tiny)
 
 ##
