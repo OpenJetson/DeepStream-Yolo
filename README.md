@@ -79,9 +79,7 @@ Compile nvdsinfer (requires libopencv-dev; example for CUDA 10.0 version)
 cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
 CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
 ```
-
 Compile gst-nvinfer (requires libgstreamer-plugins-base1.0-dev and libgstreamer1.0-dev; example for CUDA 10.0 version)
-
 ```
 cd /opt/nvidia/deepstream/deepstream-4.0/sources/gst-plugins/gst-nvinfer
 CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
@@ -122,6 +120,7 @@ In this repository have example of deepstream_app_config_yoloV3_tiny.txt file.
 ##
 
 * Edit tiled-display
+
 ```
 [tiled-display]
 enable=1
@@ -220,6 +219,7 @@ nvbuf-memory-type=0
 ##
 
 * Edit streammux
+
 Example for 1 source:
 ```
 [streammux]
@@ -252,6 +252,7 @@ nvbuf-memory-type=0
 ##
 
 * Edit primary-gie
+
 ```
 [primary-gie]
 enable=1
@@ -271,6 +272,7 @@ In this repository have example of config_infer_primary_yoloV3_tiny.txt file.
 ##
 
 * Edit batch-size
+
 ```
 # Number of sources
 batch-size=1
@@ -279,6 +281,7 @@ batch-size=1
 ##
 
 * Edit num-detected-classes according number of classes in yolo.cfg
+
 ```
 num-detected-classes=80
 ```
@@ -303,6 +306,7 @@ deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 **Q:** How to make more than 1 yolo inference?
 
 **A:** See [MULTIPLE-INFERENCES.md](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/MULTIPLE-INFERENCES.md) in this repository.
+
 ##
 
 I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
