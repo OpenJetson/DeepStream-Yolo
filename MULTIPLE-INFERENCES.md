@@ -9,9 +9,9 @@ For multiple inferences (primary gie, secondary gie, etc.) is necessary do some 
 5. Edit Yolo DeepStream for your custom model (in each inference directory: pgie, sgie*), according each yolo.cfg (v3, v3-tiny, etc.) file, following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
 6. Copy and remane each obj.names file to labels.txt in each inference directory (pgie, sgie*), according each inference type.
 7. Copy your yolo.cfg (v3, v3-tiny, etc.) file to each inference directory (pgie, sgie*), according each inference type.
-8. Copy config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) to primary inference directory (pgie).
-8. Copy and rename config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) to config_infer_secondary*.txt (* = 1, 2, 3, etc.; depending on the number of secondary inferences) in each secondary inference directory (sgie*).
-9. Copy deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) to created yolo directory.
+8. Copy config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to primary inference directory (pgie).
+8. Copy and rename config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to config_infer_secondary*.txt (* = 1, 2, 3, etc.; depending on the number of secondary inferences) to each secondary inference directory (sgie*).
+9. Copy deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to created yolo directory.
 
 In example folder, in this repository, have config_infer and deepstream_app_config example files for yolov3-tiny.
 
