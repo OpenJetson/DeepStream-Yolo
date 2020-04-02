@@ -35,7 +35,7 @@ After:
             engineFileName << s << "/model";
             //free(cwd);
 ```
-And compile it again (requires libopencv; example for CUDA 10.0 version):
+And compile it again (requires libopencv-dev; example for CUDA 10.0 version):
 ```
 cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
 CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
@@ -78,8 +78,112 @@ subdivisions=1
 #subdivisions=16
 ```
 
-## Editing config_infer
-* In each config_infer (primary, secondary), edit path of files.
+##
+
+### Editing deepstream_app_config
+
+* Edit tiled-display
+```
+[tiled-display]
+enable=1
+# If you have 1 stream use 1/1 (rows/columns), if you have 4 streams use 2/2 or 4/1 or 1/4 (rows/columns)
+rows=1
+columns=1
+# Resolution you want for the tiled display
+width=1280
+height=720
+gpu-id=0
+nvbuf-memory-type=0
+```
+
+##
+
+* Edit source
+
+Example for 1 source:
+```
+[source0]
+enable=1
+# 1=Camera (V4L2), 2=URI, 3=MultiURI, 4=RTSP, 5=Camera (CSI; Jetson only)
+type=3
+# Stream URL
+uri=rtsp://192.168.1.2/Streaming/Channels/101/httppreview
+# Number of sources copy (if > 1, you need edit rows/columns in tiled-display section and batch-size in streammux section and config_infer_primary_yoloV3_tiny.txt; need type=3 for more than 1 num-sources)
+num-sources=1
+gpu-id=0
+cudadec-memtype=0
+```
+Example for 1 duplcated source:
+```
+[source0]
+enable=1
+type=3
+uri=rtsp://192.168.1.2/Streaming/Channels/101/httppreview
+num-sources=2
+gpu-id=0
+cudadec-memtype=0
+```
+Example for 2 sources:
+```
+[source0]
+enable=1
+type=3
+uri=rtsp://192.168.1.2/Streaming/Channels/101/httppreview
+num-sources=1
+gpu-id=0
+cudadec-memtype=0
+
+[source1]
+enable=1
+type=3
+uri=rtsp://192.168.1.3/Streaming/Channels/101/httppreview
+num-sources=1
+gpu-id=0
+cudadec-memtype=0
+```
+
+##
+
+* Edit sink
+
+Example for 1 source or duplicated sources:
+```
+[sink0]
+enable=1
+# 1=Fakesink, 2=EGL (nveglglessink), 3=Filesink, 4=RTSP, 5=Overlay (Jetson only)
+type=2
+# Indicates how fast the stream is to be rendered (0=As fast as possible, 1=Synchronously)
+sync=0
+# The ID of the source whose buffers this sink must use
+source-id=0
+gpu-id=0
+nvbuf-memory-type=0
+```
+Example for 2 sources:
+```
+[sink0]
+enable=1
+type=2
+sync=0
+source-id=0
+gpu-id=0
+nvbuf-memory-type=0
+
+[sink1]
+enable=1
+type=2
+sync=0
+source-id=1
+gpu-id=0
+nvbuf-memory-type=0
+```
+
+##
+
+### Editing config_infer
+
+* Edit path of files
+
 Example for primary (using fp16):
 ```
 custom-network-config=pgie/yolov3-tiny.cfg
@@ -164,5 +268,14 @@ num-detected-classes=80
 
 Basically, you need to make these modifications.
 
+##
 
-To be continued..
+### Testing model
+To run your custom yolo model, use this command (in your custom yolo model directory; example for yolov3-tiny):
+```
+deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
+```
+
+##
+
+I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
