@@ -89,7 +89,6 @@ nvbuf-memory-type=0
 [primary-gie]
 enable=1
 gpu-id=0
-# gie ID
 gie-unique-id=1
 nvbuf-memory-type=0
 config-file=pgie/config_infer_primary_yoloV3_tiny.txt
@@ -97,7 +96,6 @@ config-file=pgie/config_infer_primary_yoloV3_tiny.txt
 [secondary-gie0]
 enable=1
 gpu-id=0
-# gie ID
 gie-unique-id=2
 # If you want secodary inference operate on specified gie id (gie-unique-id you want to operate: 1, 2, etc.)
 operate-on-gie-id=1
