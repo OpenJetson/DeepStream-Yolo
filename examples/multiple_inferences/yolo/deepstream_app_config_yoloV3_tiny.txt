@@ -99,9 +99,9 @@ enable=1
 gpu-id=0
 # gie ID
 gie-unique-id=2
-# If you want secodary inference operate on specified gie id
+# If you want secodary inference operate on specified gie id (gie-unique-id you want to operate: 1, 2, etc.)
 operate-on-gie-id=1
-# If you want secodary inference operate on specified class ids of gie
+# If you want secodary inference operate on specified class ids of gie (class ids you want to operate: 1, 1;2, 2;3;4, 3 etc.)
 operate-on-class-ids=0
 nvbuf-memory-type=0
 config-file=sgie1/config_infer_secondary1_yoloV3_tiny.txt
