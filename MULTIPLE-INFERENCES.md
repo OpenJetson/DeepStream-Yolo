@@ -1,6 +1,6 @@
 # Multiple inferences
 
-For multiple inferences (primary gie, secondary gie, etc.) is necessary do some implementations on sample yolo configs files.
+To multiple inferences (primary gie, secondary gie, etc.) is necessary do some implementations on sample yolo configs files.
 
 1. Make a folder named yolo in /opt/nvidia/deepstream/deepstream-4.0/sources/ directory.
 2. Make a folder, in created yolo directory, named pgie (where you will put files of primary inference).
