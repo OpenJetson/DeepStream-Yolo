@@ -9,8 +9,8 @@ For multiple inferences (primary gie, secondary gie, etc.) is necessary do some 
 5. Edit Yolo DeepStream for your custom model (in each inference directory: pgie, sgie*), according each yolo.cfg (v3, v3-tiny, etc.) file, following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
 6. Copy and remane each obj.names file to labels.txt in each inference directory (pgie, sgie*), according each inference type.
 7. Copy your yolo.cfg (v3, v3-tiny, etc.) file to each inference directory (pgie, sgie*), according each inference type.
-8. Copy config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to primary inference directory (pgie).
-8. Copy and rename config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to config_infer_secondary*.txt (* = 1, 2, 3, etc.; depending on the number of secondary inferences) to each secondary inference directory (sgie*).
+8. Copy config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to created yolo directory.
+8. Copy and rename config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to each config_infer_secondary*.txt (* = 1, 2, 3, etc.; depending on the number of secondary inferences) to created yolo directory.
 9. Copy deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to created yolo directory.
 
 In example folder, in this repository, have config_infer and deepstream_app_config example files for yolov3-tiny.
@@ -53,4 +53,85 @@ subdivisions=1
 ```
 
 ## Editing config_infer
+* In each config_infer (primary, secondary), edit path of files.
+Example for primary (using fp16):
+```
+custom-network-config=pgie/yolov3-tiny.cfg
+model-file=pgie/yolov3-tiny.weights
+model-engine-file=pgie/model_b1_fp16.engine
+labelfile-path=pgie/labels.txt
+custom-lib-path=pgie/nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
+```
+Example for secondary1 (using fp16):
+```
+custom-network-config=sgie1/yolov3-tiny.cfg
+model-file=sgie1/yolov3-tiny.weights
+model-engine-file=sgie1/model_b16_fp16.engine
+labelfile-path=sgie1/labels.txt
+custom-lib-path=sgie1/nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
+```
+Example for secondary2 (using fp16):
+```
+custom-network-config=sgie2/yolov3-tiny.cfg
+model-file=sgie2/yolov3-tiny.weights
+model-engine-file=sgie2/model_b16_fp16.engine
+labelfile-path=sgie2/labels.txt
+custom-lib-path=sgie2/nvdsinfer_custom_impl_Yolo/libnvdsinfer_custom_impl_Yolo.so
+```
 
+##
+
+* Edit gie-unique-id
+
+Example for primary:
+```
+gie-unique-id=1
+process-mode=1
+```
+Example for secondary1:
+```
+gie-unique-id=2
+process-mode=2
+```
+Example for secondary2:
+```
+gie-unique-id=3
+process-mode=3
+```
+
+##
+
+* Edit batch-size
+
+Example for primary:
+```
+# Number of streams
+batch-size=1
+```
+Example for all secondary:
+```
+batch-size=16
+```
+
+##
+
+* If you want secodary inference operate on specified inference and specified class ids
+```
+#gie-unique-id you want to operate (1, 2, etc.)
+operate-on-gie-id=1
+```
+
+##
+
+* If you want secodary inference operate on specified class ids
+```
+#class ids you want to operate (1, 1;2, 2;3;4, 3 etc.)
+operate-on-class-ids=0
+```
+
+##
+
+* Edit num-detected-classes of each config_infer file according you classes in yolo.cfg
+```
+num-detected-classes=80
+```
