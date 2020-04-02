@@ -13,7 +13,7 @@ To multiple inferences (primary gie, secondary gie, etc.) is necessary do some i
 8. Copy and rename config_infer_primary.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to each config_infer_secondary*.txt (* = 1, 2, 3, etc.; depending on the number of secondary inferences) to created yolo directory.
 9. Copy deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to created yolo directory.
 
-In example folder, in this repository, have config_infer and deepstream_app_config example files for yolov3-tiny.
+In example folder, in this repository, have Makefile, config_infer and deepstream_app_config example files for yolov3-tiny.
 
 ##
 
@@ -233,9 +233,9 @@ enable=1
 gpu-id=0
 # gie ID
 gie-unique-id=2
-# If you want secodary inference operate on specified gie id
+# If you want secodary inference operate on specified gie id (gie-unique-id you want to operate: 1, 2, etc.)
 operate-on-gie-id=1
-# If you want secodary inference operate on specified class ids of gie
+# If you want secodary inference operate on specified class ids of gie (class ids you want to operate: 1, 1;2, 2;3;4, 3 etc.)
 operate-on-class-ids=0
 nvbuf-memory-type=0
 config-file=sgie1/config_infer_secondary1_yoloV3_tiny.txt
