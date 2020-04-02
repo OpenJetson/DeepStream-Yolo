@@ -73,6 +73,18 @@ In /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/nvdsinfer_contex
          }
      }
 ```
+Compile nvdsinfer (requires libopencv-dev; example for CUDA 10.0 version)
+```
+cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
+CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
+```
+
+Compile gst-nvinfer (requires libgstreamer-plugins-base1.0-dev and libgstreamer1.0-dev; example for CUDA 10.0 version)
+
+```
+cd /opt/nvidia/deepstream/deepstream-4.0/sources/gst-plugins/gst-nvinfer
+CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
+```
 
 ##
 
