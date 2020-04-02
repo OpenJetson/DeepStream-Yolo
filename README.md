@@ -78,7 +78,7 @@ In /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/nvdsinfer_contex
 1. Check your CUDA version (nvcc --version)
 2. Open terminal
 3. Go to your custom yolo directory
-4. Type this command: (example for CUDA 10.0 version)
+4. Type this command (example for CUDA 10.0 version):
 ```
 CUDA_VER=10.0 make -C nvdsinfer_custom_impl_Yolo
 ```
