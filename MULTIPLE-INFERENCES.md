@@ -131,7 +131,12 @@ operate-on-class-ids=0
 
 ##
 
-* Edit num-detected-classes of each config_infer file according you classes in yolo.cfg
+* Edit num-detected-classes of each config_infer file according number of classes in each yolo.cfg
 ```
 num-detected-classes=80
 ```
+
+Basically, you need to make these modifications.
+
+
+To be continued..
