@@ -89,7 +89,7 @@ enable=1
 # If you have 1 stream use 1/1 (rows/columns), if you have 4 streams use 2/2 or 4/1 or 1/4 (rows/columns)
 rows=1
 columns=1
-# Resolution you want for the tiled display
+# Resolution of tiled display
 width=1280
 height=720
 gpu-id=0
@@ -146,7 +146,7 @@ cudadec-memtype=0
 
 * Edit sink
 
-Example for 1 source or duplicated sources:
+Example for 1 source or 1 duplicated source:
 ```
 [sink0]
 enable=1
@@ -176,6 +176,89 @@ sync=0
 source-id=1
 gpu-id=0
 nvbuf-memory-type=0
+```
+
+##
+
+* Edit streammux
+Example for 1 source:
+```
+[streammux]
+gpu-id=0
+# Boolean property to inform muxer that sources are live
+live-source=1
+# Number of sources
+batch-size=1
+# Time out in usec, to wait after the first buffer is available to push the batch even if the complete batch is not formed
+batched-push-timeout=-1
+# Resolution of streammux
+width=1920
+height=1080
+enable-padding=0
+nvbuf-memory-type=0
+```
+Example for 1 duplicated source or 2 sources:
+```
+[streammux]
+gpu-id=0
+live-source=1
+batch-size=2
+batched-push-timeout=-1
+width=1920
+height=1080
+enable-padding=0
+nvbuf-memory-type=0
+```
+
+##
+
+* Edit primary-gie
+```
+[primary-gie]
+enable=1
+gpu-id=0
+gie-unique-id=1
+nvbuf-memory-type=0
+config-file=pgie/config_infer_primary_yoloV3_tiny.txt
+```
+
+##
+
+* Add secondary-gie
+
+Example for 1 secondary-gie (2 inferences):
+```
+[secondary-gie0]
+enable=1
+gpu-id=0
+# gie ID
+gie-unique-id=2
+# If you want secodary inference operate on specified gie id
+operate-on-gie-id=1
+# If you want secodary inference operate on specified class ids of gie
+operate-on-class-ids=0
+nvbuf-memory-type=0
+config-file=sgie1/config_infer_secondary1_yoloV3_tiny.txt
+```
+Example for 2 secondary-gie (3 inferences):
+```
+[secondary-gie0]
+enable=1
+gpu-id=0
+gie-unique-id=2
+operate-on-gie-id=1
+operate-on-class-ids=0
+nvbuf-memory-type=0
+config-file=sgie1/config_infer_secondary1_yoloV3_tiny.txt
+
+[secondary-gie1]
+enable=1
+gpu-id=0
+gie-unique-id=3
+operate-on-gie-id=1
+operate-on-class-ids=0
+nvbuf-memory-type=0
+config-file=sgie2/config_infer_secondary2_yoloV3_tiny.txt
 ```
 
 ##
@@ -245,7 +328,7 @@ batch-size=16
 
 ##
 
-* If you want secodary inference operate on specified inference and specified class ids
+* If you want secodary inference operate on specified gie id
 ```
 #gie-unique-id you want to operate (1, 2, etc.)
 operate-on-gie-id=1
@@ -253,7 +336,7 @@ operate-on-gie-id=1
 
 ##
 
-* If you want secodary inference operate on specified class ids
+* If you want secodary inference operate on specified class ids of gie
 ```
 #class ids you want to operate (1, 1;2, 2;3;4, 3 etc.)
 operate-on-class-ids=0
@@ -265,8 +348,6 @@ operate-on-class-ids=0
 ```
 num-detected-classes=80
 ```
-
-Basically, you need to make these modifications.
 
 ##
 
