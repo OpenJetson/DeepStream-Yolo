@@ -29,7 +29,7 @@ enable=1
 # If you have 1 stream use 1/1 (rows/columns), if you have 4 streams use 2/2 or 4/1 or 1/4 (rows/columns)
 rows=1
 columns=1
-# Resolution you want for the tiled display
+# Resolution of tiled display
 width=1280
 height=720
 gpu-id=0
@@ -37,9 +37,11 @@ nvbuf-memory-type=0
 
 [source0]
 enable=1
+# 1=Camera (V4L2), 2=URI, 3=MultiURI, 4=RTSP, 5=Camera (CSI; Jetson only)
 type=3
+# Stream URL
 uri=rtsp://192.168.1.2/Streaming/Channels/101/httppreview
-# Number of sources copy (if > 1, you need edit rows/columns in tiled-display section and batch-size in streammux section/config_infer_primary_yoloV3_tiny.txt)
+# Number of sources copy (if > 1, you need edit rows/columns in tiled-display section and batch-size in streammux section and config_infer_primary_yoloV3_tiny.txt; need type=3 for more than 1 num-sources)
 num-sources=1
 gpu-id=0
 cudadec-memtype=0
@@ -48,7 +50,7 @@ cudadec-memtype=0
 enable=1
 # 1=Fakesink, 2=EGL (nveglglessink), 3=Filesink, 4=RTSP, 5=Overlay (Jetson only)
 type=2
-# Indicates how fast the stream is to be rendered (0=As fast as possible 1=Synchronously)
+# Indicates how fast the stream is to be rendered (0=As fast as possible, 1=Synchronously)
 sync=0
 # The ID of the source whose buffers this sink must use
 source-id=0
@@ -78,6 +80,7 @@ live-source=1
 batch-size=1
 # Time out in usec, to wait after the first buffer is available to push the batch even if the complete batch is not formed
 batched-push-timeout=-1
+# Resolution of streammux
 width=1920
 height=1080
 enable-padding=0
@@ -86,6 +89,7 @@ nvbuf-memory-type=0
 [primary-gie]
 enable=1
 gpu-id=0
+# gie ID
 gie-unique-id=1
 nvbuf-memory-type=0
 config-file=config_infer_primary_yoloV3_tiny.txt
