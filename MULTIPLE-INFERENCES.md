@@ -318,7 +318,7 @@ process-mode=3
 
 Example for primary:
 ```
-# Number of streams
+# Number of sources
 batch-size=1
 ```
 Example for all secondary:
