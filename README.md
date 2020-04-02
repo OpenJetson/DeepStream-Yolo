@@ -288,6 +288,15 @@ num-detected-classes=80
 
 ##
 
+* Edit interval
+
+```
+# Interval of detection (keep >= 1 for real time detection on NVIDIA Jetson Nano)
+interval=1
+```
+
+##
+
 ### Testing model
 To run your custom yolo model, use this command (in your custom model directory; example for yolov3-tiny):
 ```
