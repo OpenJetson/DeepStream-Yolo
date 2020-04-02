@@ -35,10 +35,10 @@ After:
             engineFileName << s << "/model";
             //free(cwd);
 ```
-And compile it again (requires libopencv):
+And compile it again (requires libopencv; example for CUDA 10.0 version):
 ```
 cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
-make and sudo make install
+CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
 ```
 
 ##
