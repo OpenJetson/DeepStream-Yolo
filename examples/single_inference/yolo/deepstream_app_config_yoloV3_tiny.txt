@@ -89,7 +89,6 @@ nvbuf-memory-type=0
 [primary-gie]
 enable=1
 gpu-id=0
-# gie ID
 gie-unique-id=1
 nvbuf-memory-type=0
 config-file=config_infer_primary_yoloV3_tiny.txt
