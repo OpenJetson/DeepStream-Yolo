@@ -122,14 +122,13 @@ deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 ### FAQ
 **Q:** Can I run custom yolo model on deepstream with non-square shape?
 
-**A:** You can, but the accuracy will greatly decrease. If you want to test, see [this patch](https://forums.developer.nvidia.com/t/trouble-in-converting-non-square-grid-in-yolo-network-to-tensorrt-via-deepstream/107541/12)
+**A:** You can, but the accuracy will greatly decrease. If you want to test, see [this patch](https://forums.developer.nvidia.com/t/trouble-in-converting-non-square-grid-in-yolo-network-to-tensorrt-via-deepstream/107541/12).
 
 <br>
 
 **Q:** How to make more than 1 yolo inference?
 
-**A:** See MULTIPLE-INFERENCES.md in this repository (comming soon)
-
+**A:** See [MULTIPLE-INFERENCES.md](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/MULTIPLE-INFERENCES.md) in this repository.
 ##
 
 I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
