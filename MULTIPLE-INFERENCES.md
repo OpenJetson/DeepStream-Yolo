@@ -234,7 +234,6 @@ Example for 1 secondary-gie (2 inferences):
 [secondary-gie0]
 enable=1
 gpu-id=0
-# gie ID
 gie-unique-id=2
 # If you want secodary inference operate on specified gie id (gie-unique-id you want to operate: 1, 2, etc.)
 operate-on-gie-id=1
@@ -353,6 +352,15 @@ operate-on-class-ids=0
 
 ```
 num-detected-classes=80
+```
+
+##
+
+* Edit interval in config_infer_primary file
+
+```
+# Interval of detection (keep >= 1 for real time detection on NVIDIA Jetson Nano)
+interval=1
 ```
 
 ##
