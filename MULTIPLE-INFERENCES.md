@@ -83,6 +83,7 @@ subdivisions=1
 ### Editing deepstream_app_config
 
 * Edit tiled-display
+
 ```
 [tiled-display]
 enable=1
@@ -181,6 +182,7 @@ nvbuf-memory-type=0
 ##
 
 * Edit streammux
+
 Example for 1 source:
 ```
 [streammux]
@@ -213,6 +215,7 @@ nvbuf-memory-type=0
 ##
 
 * Edit primary-gie
+
 ```
 [primary-gie]
 enable=1
@@ -329,6 +332,7 @@ batch-size=16
 ##
 
 * If you want secodary inference operate on specified gie id
+
 ```
 #gie-unique-id you want to operate (1, 2, etc.)
 operate-on-gie-id=1
@@ -337,6 +341,7 @@ operate-on-gie-id=1
 ##
 
 * If you want secodary inference operate on specified class ids of gie
+
 ```
 #class ids you want to operate (1, 1;2, 2;3;4, 3 etc.)
 operate-on-class-ids=0
@@ -345,6 +350,7 @@ operate-on-class-ids=0
 ##
 
 * Edit num-detected-classes of each config_infer file according number of classes in each yolo.cfg
+
 ```
 num-detected-classes=80
 ```
