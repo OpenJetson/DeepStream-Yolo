@@ -3,6 +3,8 @@ NVIDIA DeepStream SDK configuration for Yolo model
 
 Tested on NVIDIA Jetson Nano
 
+Video: https://www.youtube.com/watch?v=n3uYS550PDo
+
 ##
 
 * [Requirements](#requirements)
