@@ -321,3 +321,5 @@ deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 ##
 
 I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
+
+Sorry for any English error, it is not my native language.
