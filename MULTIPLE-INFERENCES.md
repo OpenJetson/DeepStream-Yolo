@@ -37,6 +37,16 @@ After:
 ```
 And compile it again (requires libopencv-dev; example for CUDA 10.0 version):
 ```
+If you using libopencv-dev (opencv4), edit /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/Makefile (lines 29-30) 
+```
+CFLAGS+= -fPIC -std=c++11 \
+	 -I /usr/local/cuda-$(CUDA_VER)/include \
+-	 -I ../../includes 
++	 -I ../../includes \
++	 -I /usr/include/opencv4
+
+LIBS := -shared -Wl,-no-undefined \
+```
 cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
 CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
 ```
