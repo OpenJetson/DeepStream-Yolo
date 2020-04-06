@@ -76,6 +76,16 @@ In /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/nvdsinfer_contex
          }
      }
 ```
+If you using OpenCV 4+, edit /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/Makefile (lines 29-30) 
+```
+CFLAGS+= -fPIC -std=c++11 \
+	 -I /usr/local/cuda-$(CUDA_VER)/include \
+-	 -I ../../includes 
++	 -I ../../includes \
++	 -I /usr/include/opencv4
+
+LIBS := -shared -Wl,-no-undefined \
+```
 Compile nvdsinfer (requires libopencv-dev; example for CUDA 10.0 version)
 ```
 cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
