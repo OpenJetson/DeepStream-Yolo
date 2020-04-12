@@ -3,7 +3,7 @@ NVIDIA DeepStream SDK configuration for Yolo model
 
 Tested on NVIDIA Jetson Nano
 
-Comparison between NVIDIA Deepstream SDK and Darknet: https://github.com/marcoslucianops/Benchmark-Yolo
+Comparison between NVIDIA DeepStream SDK and Darknet: https://github.com/marcoslucianops/Benchmark-Yolo
 
 ##
 
