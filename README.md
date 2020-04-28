@@ -320,7 +320,7 @@ deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 
 ### Custom functions in your model
 
-You can get metadata from deepstream in Python and C. In C, you need use deepstream-app or deepstream-test code. In Python your need use [this](https://github.com/NVIDIA-AI-IOT/deepstream_python_apps).
+You can get metadata from deepstream in Python and C. For C, you need edit deepstream-app or deepstream-test code. For Python your need install and edit [this](https://github.com/NVIDIA-AI-IOT/deepstream_python_apps).
 
 You need manipulate [NvDsObjectMeta](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsObjectMeta.html), [NvDsFrameMeta](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsFrameMeta.html) and [NvOSD_RectParams](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvOSD__RectParams.html) to get label, position, etc. of bboxs.
 
