@@ -14,6 +14,7 @@ Comparison between NVIDIA DeepStream SDK and Darknet: https://github.com/marcosl
 * [Understanding and editing deepstream_app_config](#understanding-and-editing-deepstream_app_config)
 * [Understanding and editing config_infer_primary](#understanding-and-editing-config_infer_primary)
 * [Testing model](#testing-model)
+* [Custom functions in your model](#custom-functions-in-your-model)
 * [FAQ](#faq)
 
 ##
@@ -314,6 +315,19 @@ To run your custom yolo model, use this command (in your custom model directory;
 ```
 deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 ```
+
+##
+
+### Custom functions in your model
+
+You can get metadata from deepstream in Python and C. In C, you need use deepstream-app or deepstream-test code. In Python your need use [this](https://github.com/NVIDIA-AI-IOT/deepstream_python_apps).
+
+You need manipulate [NvDsObjectMeta](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsObjectMeta.html), [NvDsFrameMeta](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsFrameMeta.html) and [NvOSD_RectParams](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvOSD__RectParams.html) to get label, position, etc. of bboxs.
+
+In C deepstream-app application, your code need be in analytics_done_buf_prob function.
+In C/Python deepstream-test application, your code need be in tiler_src_pad_buffer_probe function.
+
+Python is slightly slower than C (on Jetson Nano, ~2FPS).
 
 ##
 
