@@ -278,7 +278,7 @@ config-file=config_infer_primary_yoloV3_tiny.txt
 ##
 
 ### Understanding and editing config_infer_primary
-To understand and edit config_infer_primary file, read the [DeepStream SDK Development Guide - Application Customization](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%2520Development%2520Guide%2Fdeepstream_custom_model.html)
+To understand and edit config_infer_primary file, read the [NVIDIA DeepStream Plugin Manual - Gst-nvinfer File Configuration Specifications](https://docs.nvidia.com/metropolis/deepstream/plugin-manual/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.3.01.html#wwpID0E0WDB0HA)
 
 In this repository have example of config_infer_primary_yoloV3_tiny.txt file.
 
