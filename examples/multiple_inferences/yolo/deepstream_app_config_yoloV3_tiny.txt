@@ -1,5 +1,5 @@
 ################################################################################
-# Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
+# Copyright (c) 2019-2020, NVIDIA CORPORATION. All rights reserved.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
@@ -91,16 +91,16 @@ enable=1
 gpu-id=0
 gie-unique-id=1
 nvbuf-memory-type=0
-config-file=pgie/config_infer_primary_yoloV3_tiny.txt
+config-file=config_infer_primary_yoloV3_tiny.txt
 
 [secondary-gie0]
 enable=1
 gpu-id=0
 gie-unique-id=2
 # If you want secodary inference operate on specified gie id (gie-unique-id you want to operate: 1, 2, etc.)
-operate-on-gie-id=1
+#operate-on-gie-id=1
 # If you want secodary inference operate on specified class ids of gie (class ids you want to operate: 1, 1;2, 2;3;4, 3 etc.)
-operate-on-class-ids=0
+#operate-on-class-ids=0
 nvbuf-memory-type=0
 config-file=sgie1/config_infer_secondary1_yoloV3_tiny.txt
 
