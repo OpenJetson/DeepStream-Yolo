@@ -3,7 +3,7 @@
 1. Make a folder named yolo in /opt/nvidia/deepstream/deepstream-5.0/sources/ directory.
 2. Make a folder, in created yolo directory, named pgie (where you will put files of primary inference).
 3. Make a folder, for each secondary inference, in created yolo directory, named sgie* (* = 1, 2, 3, etc.; depending on the number of secondary inferences; where you will put files of another inferences).
-4. Copy of nvdsinfer_custom_impl_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo) to each inference directory (pgie, sgie*).
+4. Copy of nvdsinfer_custom_impl_Yolo folder (located in /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_Yolo) to each inference directory (pgie, sgie*).
 5. Edit Yolo DeepStream for your custom model (in each inference directory: pgie, sgie*), according each yolo.cfg (v3, v3-tiny, etc.) file: https://github.com/marcoslucianops/DeepStream-Yolo#editing-default-model
 6. Copy and remane each obj.names file to labels.txt in each inference directory (pgie, sgie*), according each inference type.
 7. Copy your yolo.cfg (v3, v3-tiny, etc.) file to each inference directory (pgie, sgie*), according each inference type.
