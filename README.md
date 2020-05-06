@@ -20,83 +20,35 @@ Comparison between NVIDIA DeepStream SDK and Darknet: https://github.com/marcosl
 ##
 
 ### Requirements
-* [NVIDIA DeepStream SDK](https://developer.nvidia.com/deepstream-sdk) >= 4
-* [OpenCV](https://opencv.org/releases.html) (if you want to [populate confidence](#populate-confidence); it's built-in in latest [NVIDIA JetPack](https://developer.nvidia.com/embedded/jetpack); sudo apt-get install libopencv-dev)
-* [GStreamer](https://gstreamer.freedesktop.org/)-1.0 Development package and Base Plugins Development package (sudo apt-get install libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev)
-* [Pre-treined Yolo model](https://github.com/AlexeyAB/darknet) (for NVIDIA Jetson Nano, I recommend YoloV3-Tiny)
+* [NVIDIA DeepStream SDK 5](https://developer.nvidia.com/deepstream-sdk)
+* [GStreamer](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html)
+* [Pre-treined Yolo model](https://github.com/AlexeyAB/darknet) (for NVIDIA Jetson Nano, I recommend YoloV3-Tiny or YoloV3-Tiny-PRN <- Fastest)
 
 ##
 
 ### Editing default model
-1. Copy nvdsinfer_custom_impl_Yolo folder (located in /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo/) to your custom yolo directory.
-2. Edit Yolo DeepStream for your custom model (in your custom yolo directory), following this [Application Note](https://docs.nvidia.com/metropolis/deepstream/4.0/Custom_YOLO_Model_in_the_DeepStream_YOLO_App.pdf).
+1. Copy nvdsinfer_custom_impl_Yolo folder (located in /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_Yolo/) to your custom yolo directory (must be in sources folder).
+2. Edit Yolo DeepStream for your custom model:
+
+* Example for YoloV3-Tiny:
+
+Line 34:
+```
+static const int NUM_CLASSES_YOLO = 80; // Number of classes of your custom model
+```
+
+Line 299-304:
+```
+    static const std::vector<float> kANCHORS = {
+        10, 14, 23, 27, 37, 58, 81, 82, 135, 169, 344, 319}; // Anchors of your custom model
+    static const std::vector<std::vector<int>> kMASKS = {
+        {3, 4, 5}, // First mask of your custom model
+        {1, 2, 3}}; // Second mask of your custom model
+```
+
 3. Copy and remane your obj.names file to labels.txt to your custom yolo directory.
 4. Copy your yolo.cfg (v3, v3-tiny, etc.) file to your custom yolo directory.
-5. Copy config_infer_primary.txt and deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-4.0/sources/objectDetector_Yolo to your custom yolo directory.
-
-In example folder, in this repository, have config_infer_primary and deepstream_app_config example files for yolov3-tiny.
-
-##
-
-### Populate confidence
-If you want to populate confidence in object detection, do patch below (Thanks for [chandrahasj](https://forums.developer.nvidia.com/t/nvinfer-is-not-populating-confidence-field-in-nvdsobjectmeta-ds-4-0/79319/20)). If you don't want to populate confidence, skip this step.
-
-1. Only works with OpenCV
-2. You need edit C or Python deepstream program to show the confidence, this patch only allows to get confidence (view [this post](https://forums.developer.nvidia.com/t/nvinfer-is-not-populating-confidence-field-in-nvdsobjectmeta-ds-4-0/79319/20) to see more)
-
-In /opt/nvidia/deepstream/deepstream-4.0/sources/gst-plugins/gst-nvinfer/gstnvinfer_meta_utils.cpp
-```
-@@ -80,7 +80,7 @@ attach_metadata_detector (GstNvInfer * nvinfer, GstMiniObject * tensor_out_objec
-     obj_meta = nvds_acquire_obj_meta_from_pool (batch_meta);
- 
-     obj_meta->unique_component_id = nvinfer->unique_id;
--    obj_meta->confidence = 0.0;
-+    obj_meta->confidence = obj.detectionConfidence;
- 
-     /* This is an untracked object. Set tracking_id to -1. */
-     obj_meta->object_id = UNTRACKED_OBJECT_ID;
-```
-In /opt/nvidia/deepstream/deepstream-4.0/sources/includes/nvdsinfer_context.h
-```
-@@ -369,6 +369,8 @@ typedef struct
-     int classIndex;
-     /* String label for the detected object. */
-     char *label;
-+    /* detection confidence of the object */
-+    float detectionConfidence;
- } NvDsInferObject;
-```
-In /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/nvdsinfer_context_impl_output_parsing.cpp
-```
-@@ -282,6 +282,7 @@ NvDsInferContextImpl::clusterAndFillDetectionOutputDBSCAN(NvDsInferDetectionOutp
-             object.label = nullptr;
-             if (c < m_Labels.size() && m_Labels[c].size() > 0)
-                 object.label = strdup(m_Labels[c][0].c_str());
-+            object.detectionConfidence = m_PerClassObjectList[c][i].detectionConfidence;
-             output.numObjects++;
-         }
-     }
-```
-If you using libopencv-dev (opencv4), edit /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer/Makefile (lines 29-30) 
-```
-CFLAGS+= -fPIC -std=c++11 \
-	 -I /usr/local/cuda-$(CUDA_VER)/include \
--	 -I ../../includes 
-+	 -I ../../includes \
-+	 -I /usr/include/opencv4
-
-LIBS := -shared -Wl,-no-undefined \
-```
-Compile nvdsinfer (requires libopencv-dev; example for CUDA 10.0 version)
-```
-cd /opt/nvidia/deepstream/deepstream-4.0/sources/libs/nvdsinfer
-CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
-```
-Compile gst-nvinfer (requires libgstreamer-plugins-base1.0-dev and libgstreamer1.0-dev; example for CUDA 10.0 version)
-```
-cd /opt/nvidia/deepstream/deepstream-4.0/sources/gst-plugins/gst-nvinfer
-CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
-```
+5. Copy config_infer_primary.txt and deepstream_app_config.txt (same of your yolo model; v3, v3-tiny, etc.) from /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_Yolo to your custom yolo directory.
 
 ##
 
@@ -104,9 +56,9 @@ CUDA_VER=10.0 make and sudo CUDA_VER=10.0 make install
 1. Check your CUDA version (nvcc --version)
 2. Open terminal
 3. Go to your custom yolo directory
-4. Type this command (example for CUDA 10.0 version):
+4. Type this command (example for CUDA 10.2 version):
 ```
-CUDA_VER=10.0 make -C nvdsinfer_custom_impl_Yolo
+CUDA_VER=10.2 make -C nvdsinfer_custom_impl_Yolo
 ```
 
 ##
@@ -126,9 +78,9 @@ subdivisions=1
 ##
 
 ### Understanding and editing deepstream_app_config
-To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream%2520Development%2520Guide%2Fdeepstream_app_config.3.2.html)
+To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/DeepStream_Development_Guide/deepstream_app_config.3.2.html#wwconnect_header)
 
-In this repository have example of deepstream_app_config_yoloV3_tiny.txt file.
+In this repository have example of deepstream_app_config_yoloV3_tiny.txt file for YoloV3-Tiny.
 
 ##
 
@@ -242,7 +194,7 @@ live-source=1
 # Number of sources
 batch-size=1
 # Time out in usec, to wait after the first buffer is available to push the batch even if the complete batch is not formed
-batched-push-timeout=-1
+batched-push-timeout=40000
 # Resolution of streammux
 width=1920
 height=1080
@@ -275,12 +227,31 @@ nvbuf-memory-type=0
 config-file=config_infer_primary_yoloV3_tiny.txt
 ```
 
+* You can remove [tracker] section, if you don't use it.
+
 ##
 
 ### Understanding and editing config_infer_primary
 To understand and edit config_infer_primary file, read the [NVIDIA DeepStream Plugin Manual - Gst-nvinfer File Configuration Specifications](https://docs.nvidia.com/metropolis/deepstream/plugin-manual/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.3.01.html#wwpID0E0WDB0HA)
 
-In this repository have example of config_infer_primary_yoloV3_tiny.txt file.
+In this repository have example of config_infer_primary_yoloV3_tiny.txt file for YoloV3-Tiny.
+
+##
+
+* Edit model-color-format accoding number of channels in yolo.cfg (1=GRAYSCALE, 3=RGB)
+
+```
+# 0=RGB, 1=BGR, 2=GRAYSCALE
+model-color-format=0
+```
+
+##
+
+* Edit model-engine-file (example for batch-size=1 and network-mode=2)
+
+```
+model-engine-file=model_b1_gpu0_fp16.engine
+```
 
 ##
 
@@ -293,6 +264,15 @@ batch-size=1
 
 ##
 
+* Edit network-mode
+
+```
+# 0=FP32, 1=INT8, 2=FP16
+network-mode=0
+```
+
+##
+
 * Edit num-detected-classes according number of classes in yolo.cfg
 
 ```
@@ -301,14 +281,53 @@ num-detected-classes=80
 
 ##
 
-* Edit interval
+* Edit network-type
 
 ```
-# Interval of detection (keep >= 1 for real time detection on NVIDIA Jetson Nano)
+# 0:Detector, 1:Classifier, 2:Segmentation
+network-type=0
+```
+
+##
+
+* Add/edit interval (FPS increase if > 0)
+
+```
+# Interval of detection
 interval=1
 ```
 
 ##
+
+* Change threshold to pre-cluster-threshold
+
+```
+threshold=0.7
+```
+
+to
+
+```
+pre-cluster-threshold=0.7
+```
+
+##
+
+* To get more similar inference results to Darknet, change
+
+```
+nms-iou-threshold=0.3
+pre-cluster-threshold=0.7
+```
+
+to
+
+```
+# Darknet nms
+nms-iou-threshold=0.45
+# Darknet conf_thresh
+pre-cluster-threshold=0.25
+```
 
 ### Testing model
 To run your custom yolo model, use this command (in your custom model directory; example for yolov3-tiny):
@@ -322,7 +341,7 @@ deepstream-app -c deepstream_app_config_yoloV3_tiny.txt
 
 You can get metadata from deepstream in Python and C. For C, you need edit deepstream-app or deepstream-test code. For Python your need install and edit [this](https://github.com/NVIDIA-AI-IOT/deepstream_python_apps).
 
-You need manipulate [NvDsObjectMeta](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsObjectMeta.html), [NvDsFrameMeta](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsFrameMeta.html) and [NvOSD_RectParams](https://docs.nvidia.com/metropolis/deepstream/4.0/dev-guide/DeepStream_Development_Guide/baggage/struct__NvOSD__RectParams.html) to get label, position, etc. of bboxs.
+You need manipulate [NvDsObjectMeta](https://docs.nvidia.com/metropolis/deepstream/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsObjectMeta.html), [NvDsFrameMeta](https://docs.nvidia.com/metropolis/deepstream/dev-guide/DeepStream_Development_Guide/baggage/struct__NvDsFrameMeta.html) and [NvOSD_RectParams](https://docs.nvidia.com/metropolis/deepstream/dev-guide/DeepStream_Development_Guide/baggage/struct__NvOSD__RectParams.html) to get label, position, etc. of bboxs.
 
 In C deepstream-app application, your code need be in analytics_done_buf_prob function.
 In C/Python deepstream-test application, your code need be in tiler_src_pad_buffer_probe function.
@@ -341,6 +360,12 @@ Python is slightly slower than C (on Jetson Nano, ~2FPS).
 **Q:** How to make more than 1 yolo inference?
 
 **A:** See [MULTIPLE-INFERENCES.md](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/MULTIPLE-INFERENCES.md) in this repository.
+
+<br>
+
+**Q:** How to use YoloV3-Tiny-PRN?
+
+**A:** Coming soon.
 
 ##
 
