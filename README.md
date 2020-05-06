@@ -363,9 +363,9 @@ Python is slightly slower than C (on Jetson Nano, ~2FPS).
 
 <br>
 
-**Q:** How to use YoloV3-Tiny-PRN?
+**Q:** How to use YoloV3-Tiny-PRN? (~2FPS increase on NVIDIA Jetson Nano)
 
-**A:** Coming soon.
+**A:** Replace nvdsinfer_custom_impl_Yolo/yolo.cpp file to my [yolo.cpp](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/examples/yolov3-tiny-prn/nvdsinfer_custom_impl_Yolo/yolo.cpp) file.
 
 ##
 
