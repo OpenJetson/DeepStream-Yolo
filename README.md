@@ -78,7 +78,7 @@ subdivisions=1
 ##
 
 ### Understanding and editing deepstream_app_config
-To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/DeepStream_Development_Guide/deepstream_app_config.3.2.html#wwconnect_header)
+To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream_Development_Guide/deepstream_app_config.3.2.html)
 
 In this repository have example of deepstream_app_config_yoloV3_tiny.txt file for YoloV3-Tiny.
 
