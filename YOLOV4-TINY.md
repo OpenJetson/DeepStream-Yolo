@@ -3,6 +3,8 @@ NVIDIA DeepStream SDK 5 configuration for YoloV4-Tiny model
 
 Tested on NVIDIA Jetson Nano
 
+Thanks [Tianxiaomo](https://github.com/Tianxiaomo/pytorch-YOLOv4), [Ersheng](https://forums.developer.nvidia.com/t/get-wrong-infer-results-while-testing-yolov4-on-deepstream-5-0/125526/12) and [AlexeyAB](https://github.com/AlexeyAB/darknet).
+
 ##
 
 * [Requirements](#requirements)
@@ -55,8 +57,7 @@ pip3 install torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 
 ##
 
-### Convert Darknet model to ONNX model 
-Thanks [Tianxiaomo](https://github.com/Tianxiaomo/pytorch-YOLOv4), [Ersheng](https://forums.developer.nvidia.com/t/get-wrong-infer-results-while-testing-yolov4-on-deepstream-5-0/125526/12) and [AlexeyAB](https://github.com/AlexeyAB/darknet).
+### Convert Darknet model to ONNX model
 1. Download repository
 ```
 git clone https://github.com/Tianxiaomo/pytorch-YOLOv4.git
