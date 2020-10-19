@@ -2,8 +2,6 @@
 gpu-id=0
 net-scale-factor=0.0039215697906911373
 model-color-format=0
-custom-network-config=yolov4-tiny.cfg
-model-file=yolov4-tiny.weights
 model-engine-file=yolov4-tiny_fp16.engine
 labelfile-path=labels.txt
 batch-size=1
