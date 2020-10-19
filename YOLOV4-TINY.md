@@ -1,4 +1,4 @@
-# DeepStream 5 - YoloV4-Tiny
+# DeepStream YoloV4-Tiny
 NVIDIA DeepStream SDK 5 configuration for YoloV4-Tiny model
 
 Tested on NVIDIA Jetson Nano
@@ -87,7 +87,7 @@ python3 demo_darknet2onnx.py yolov4-tiny.cfg yolov4-tiny.weights ./data/giraffe.
 ##
 
 ### Edit cpp file and compile lib
-1. Add to following functions to nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp (or use my edited file available [here]())
+1. Add to following functions to nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp (or use my edited file available [here](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/examples/yolov4-tiny/nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp))
 ```
 static NvDsInferParseObjectInfo convertBBoxYoloV4(const float& bx1, const float& by1, const float& bx2,
                                      const float& by2, const uint& netW, const uint& netH)
