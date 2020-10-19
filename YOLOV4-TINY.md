@@ -84,6 +84,8 @@ python3 demo_darknet2onnx.py yolov4-tiny.cfg yolov4-tiny.weights ./data/giraffe.
 /usr/src/tensorrt/bin/trtexec --onnx=yolov4-tiny.onnx --explicitBatch --saveEngine=yolov4-tiny_fp16.engine --workspace=1024 --fp16
 ```
 
+2. Move generated yolov4-tiny_fp16.engine file to your custom yolo folder
+
 ##
 
 ### Edit cpp file and compile lib
@@ -220,7 +222,7 @@ CUDA_VER=10.2 make -C nvdsinfer_custom_impl_Yolo
 
 ### Testing model
 
-Use my edited deepstream_app_config_yoloV4_tiny.txt and config_infer_primary_yoloV4_tiny.txt files available [here]()
+Use my edited deepstream_app_config_yoloV4_tiny.txt and config_infer_primary_yoloV4_tiny.txt files available [here](https://github.com/marcoslucianops/DeepStream-Yolo/tree/master/examples/yolov4-tiny) (or edit these files for your custom model)
 
 ```
 deepstream-app -c deepstream_app_config_yoloV4_tiny.txt
