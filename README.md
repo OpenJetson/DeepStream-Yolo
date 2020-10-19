@@ -5,7 +5,7 @@ Tested on NVIDIA Jetson Nano
 
 Comparison between NVIDIA DeepStream SDK and Darknet: https://github.com/marcoslucianops/Benchmark-Yolo
 
-### -> [YoloV4-Tiny configuration for DeepStream](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/YOLOV4-TINY.md)
+### [YoloV4-Tiny configuration for DeepStream](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/YOLOV4-TINY.md)
 
 ##
 
