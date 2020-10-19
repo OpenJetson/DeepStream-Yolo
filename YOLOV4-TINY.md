@@ -233,7 +233,7 @@ deepstream-app -c deepstream_app_config_yoloV4_tiny.txt
 ### FAQ
 **Q:** Can I use YoloV4 on DeepStream?
 
-**A:** Yes, you can. Do the same steps using YoloV4 files.
+**A:** Yes, you can. Do the same steps using YoloV4 files. Remember to edit deepstream_app_config_yoloV4_tiny.txt and config_infer_primary_yoloV4_tiny.txt files to YoloV4.
 
 ##
 
