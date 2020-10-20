@@ -8,7 +8,7 @@ Thanks [DanaHan](https://github.com/DanaHan/Yolov5-in-Deepstream-5.0), [wang-xin
 ##
 
 * [Requirements](#requirements)
-* [Convert PyTorch model to wts file](#pytorch-model-to-wts-file)
+* [Convert PyTorch model to wts file](#convert-pytorch-model-to-wts-file)
 * [Convert wts file to TensorRT model](#convert-wts-file-to-tensorrt-model)
 * [Edit cpp file and compile lib](#edit-cpp-file-and-compile-lib)
 * [Testing model](#testing-model)
