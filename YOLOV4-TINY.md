@@ -75,7 +75,7 @@ wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v4_pre/y
 python3 demo_darknet2onnx.py yolov4-tiny.cfg yolov4-tiny.weights ./data/giraffe.jpg 1
 ```
 
-3. Rename generated file to yolov4-tiny.onnx
+4. Rename generated file to yolov4-tiny.onnx
 
 ##
 
