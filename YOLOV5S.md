@@ -128,85 +128,71 @@ cp libmyplugins.so /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_
 ### Edit cpp file and compile lib
 1. Add to following functions to nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp located in your deepstream-yolo folder (or use my edited file available [here](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/examples/yolov5s/nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp))
 ```
-static NvDsInferParseObjectInfo convertBBoxYoloV5(const float& bx1, const float& by1, const float& bx2,
-                                     const float& by2, const uint& netW, const uint& netH)
-{
-    NvDsInferParseObjectInfo b;
-    // Restore coordinates to network input resolution
-
-    float x1 = bx1 * netW;
-    float y1 = by1 * netH;
-    float x2 = bx2 * netW;
-    float y2 = by2 * netH;
-
-    x1 = clamp(x1, 0, netW);
-    y1 = clamp(y1, 0, netH);
-    x2 = clamp(x2, 0, netW);
-    y2 = clamp(y2, 0, netH);
-
-    b.left = x1;
-    b.width = clamp(x2 - x1, 0, netW);
-    b.top = y1;
-    b.height = clamp(y2 - y1, 0, netH);
-
-    return b;
-}
-
-static void addBBoxProposalYoloV5(const float bx, const float by, const float bw, const float bh,
-                     const uint& netW, const uint& netH, const int maxIndex,
-                     const float maxProb, std::vector<NvDsInferParseObjectInfo>& binfo)
-{
-    NvDsInferParseObjectInfo bbi = convertBBoxYoloV5(bx, by, bw, bh, netW, netH);
-    if (bbi.width < 1 || bbi.height < 1) return;
-
-    bbi.detectionConfidence = maxProb;
-    bbi.classId = maxIndex;
-    binfo.push_back(bbi);
-}
-
-static std::vector<NvDsInferParseObjectInfo>
-decodeYoloV5Tensor(
-    const float* boxes, const float* scores,
-    const uint num_bboxes, NvDsInferParseDetectionParams const& detectionParams,
-    const uint& netW, const uint& netH)
-{
-    std::vector<NvDsInferParseObjectInfo> binfo;
-
-    uint bbox_location = 0;
-    uint score_location = 0;
-    for (uint b = 0; b < num_bboxes; ++b)
-    {
-        float bx1 = boxes[bbox_location];
-        float by1 = boxes[bbox_location + 1];
-        float bx2 = boxes[bbox_location + 2];
-        float by2 = boxes[bbox_location + 3];
-
-        float maxProb = 0.0f;
-        int maxIndex = -1;
-
-        for (uint c = 0; c < detectionParams.numClassesConfigured; ++c)
-        {
-            float prob = scores[score_location + c];
-            if (prob > maxProb)
-            {
-                maxProb = prob;
-                maxIndex = c;
-            }
-        }
-
-        if (maxProb > detectionParams.perClassPreclusterThreshold[maxIndex])
-        {
-            addBBoxProposalYoloV5(bx1, by1, bx2, by2, netW, netH, maxIndex, maxProb, binfo);
-        }
-
-        bbox_location += 4;
-        score_location += detectionParams.numClassesConfigured;
-    }
-
-    return binfo;
-}
+#define NMS_THRESH 0.45
+#define CONF_THRESH 0.25
 
 extern "C" bool NvDsInferParseCustomYoloV5(
+    std::vector<NvDsInferLayerInfo> const& outputLayersInfo,
+    NvDsInferNetworkInfo const& networkInfo,
+    NvDsInferParseDetectionParams const& detectionParams,
+    std::vector<NvDsInferParseObjectInfo>& objectList);
+
+
+static constexpr int LOCATIONS = 4;
+struct alignas(float) Detection{
+        //center_x center_y w h
+        float bbox[LOCATIONS];
+        float conf;  // bbox_conf * cls_conf
+        float class_id;
+    };
+
+float iou(float lbox[4], float rbox[4]) {
+    float interBox[] = {
+        std::max(lbox[0] - lbox[2]/2.f , rbox[0] - rbox[2]/2.f), //left
+        std::min(lbox[0] + lbox[2]/2.f , rbox[0] + rbox[2]/2.f), //right
+        std::max(lbox[1] - lbox[3]/2.f , rbox[1] - rbox[3]/2.f), //top
+        std::min(lbox[1] + lbox[3]/2.f , rbox[1] + rbox[3]/2.f), //bottom
+    };
+
+    if(interBox[2] > interBox[3] || interBox[0] > interBox[1])
+        return 0.0f;
+
+    float interBoxS =(interBox[1]-interBox[0])*(interBox[3]-interBox[2]);
+    return interBoxS/(lbox[2]*lbox[3] + rbox[2]*rbox[3] -interBoxS);
+}
+
+bool cmp(Detection& a, Detection& b) {
+    return a.conf > b.conf;
+}
+
+void nms(std::vector<Detection>& res, float *output, float conf_thresh, float nms_thresh = 0.45) {
+    int det_size = sizeof(Detection) / sizeof(float);
+    std::map<float, std::vector<Detection>> m;
+    for (int i = 0; i < output[0] && i < 1000; i++) {
+        if (output[1 + det_size * i + 4] <= conf_thresh) continue;
+        Detection det;
+        memcpy(&det, &output[1 + det_size * i], det_size * sizeof(float));
+        if (m.count(det.class_id) == 0) m.emplace(det.class_id, std::vector<Detection>());
+        m[det.class_id].push_back(det);
+    }
+    for (auto it = m.begin(); it != m.end(); it++) {
+        //std::cout << it->second[0].class_id << " --- " << std::endl;
+        auto& dets = it->second;
+        std::sort(dets.begin(), dets.end(), cmp);
+        for (size_t m = 0; m < dets.size(); ++m) {
+            auto& item = dets[m];
+            res.push_back(item);
+            for (size_t n = m + 1; n < dets.size(); ++n) {
+                if (iou(item.bbox, dets[n].bbox) > nms_thresh) {
+                    dets.erase(dets.begin()+n);
+                    --n;
+                }
+            }
+        }
+    }
+}
+
+static bool NvDsInferParseYoloV5(
     std::vector<NvDsInferLayerInfo> const& outputLayersInfo,
     NvDsInferNetworkInfo const& networkInfo,
     NvDsInferParseDetectionParams const& detectionParams,
@@ -219,34 +205,39 @@ extern "C" bool NvDsInferParseCustomYoloV5(
                   << ", detected by network: " << NUM_CLASSES_YOLO << std::endl;
     }
 
-    std::vector<NvDsInferParseObjectInfo> objects;
+    std::vector<Detection> res;
 
-    const NvDsInferLayerInfo &boxes = outputLayersInfo[0]; // num_boxes x 4
-    const NvDsInferLayerInfo &scores = outputLayersInfo[1]; // num_boxes x num_classes
-
-    // 3 dimensional: [num_boxes, 1, 4]
-    assert(boxes.inferDims.numDims == 3);
-    // 2 dimensional: [num_boxes, num_classes]
-    assert(scores.inferDims.numDims == 2);
-
-    // The second dimension should be num_classes
-    assert(detectionParams.numClassesConfigured == scores.inferDims.d[1]);
+    nms(res, (float*)(outputLayersInfo[0].buffer), CONF_THRESH, NMS_THRESH);
+    //std::cout<<"Nms done sucessfully----"<<std::endl;
     
-    uint num_bboxes = boxes.inferDims.d[0];
-
-    // std::cout << "Network Info: " << networkInfo.height << "  " << networkInfo.width << std::endl;
-
-    std::vector<NvDsInferParseObjectInfo> outObjs =
-        decodeYoloV5Tensor(
-            (const float*)(boxes.buffer), (const float*)(scores.buffer), num_bboxes, detectionParams,
-            networkInfo.width, networkInfo.height);
-
-    objects.insert(objects.end(), outObjs.begin(), outObjs.end());
-
-    objectList = objects;
-
+    for(auto& r : res) {
+	    NvDsInferParseObjectInfo oinfo;        
+        
+	    oinfo.classId = r.class_id;
+	    oinfo.left    = static_cast<unsigned int>(r.bbox[0]-r.bbox[2]*0.5f);
+	    oinfo.top     = static_cast<unsigned int>(r.bbox[1]-r.bbox[3]*0.5f);
+	    oinfo.width   = static_cast<unsigned int>(r.bbox[2]);
+	    oinfo.height  = static_cast<unsigned int>(r.bbox[3]);
+	    oinfo.detectionConfidence = r.conf;
+        //std::cout << static_cast<unsigned int>(r.bbox[0]) << "," << static_cast<unsigned int>(r.bbox[1]) << "," << static_cast<unsigned int>(r.bbox[2]) << "," 
+        //          << static_cast<unsigned int>(r.bbox[3]) << "," << static_cast<unsigned int>(r.class_id) << "," << static_cast<unsigned int>(r.conf) << std::endl;
+	    objectList.push_back(oinfo);        
+    }
+    
     return true;
 }
+
+extern "C" bool NvDsInferParseCustomYoloV5(
+    std::vector<NvDsInferLayerInfo> const& outputLayersInfo,
+    NvDsInferNetworkInfo const& networkInfo,
+    NvDsInferParseDetectionParams const& detectionParams,
+    std::vector<NvDsInferParseObjectInfo>& objectList)
+{
+    return NvDsInferParseYoloV5 (
+        outputLayersInfo, networkInfo, detectionParams, objectList);
+}
+
+CHECK_CUSTOM_PARSE_FUNC_PROTOTYPE(NvDsInferParseCustomYoloV5);
 ```
 
 2. Locate your custom yolo folder and compile lib (example for dafault yolo folder and CUDA 10.2)
