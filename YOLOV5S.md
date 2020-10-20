@@ -22,12 +22,6 @@ Thanks [DanaHan](https://github.com/DanaHan/Yolov5-in-Deepstream-5.0), [wang-xin
 sudo apt-get install python3 python3-dev python3-pip
 ```
 
-* Protobuf compiler
-```
-sudo apt-get install libprotobuf-dev protobuf-compiler
-pip3 install protobuf
-```
-
 * Cython
 ```
 pip3 install cython
@@ -38,14 +32,24 @@ pip3 install cython
 pip3 install numpy
 ```
 
-* Onnx
+* Matplotlib
 ```
-pip3 install onnx
+pip3 install matplotlib
 ```
 
-* OnnxRuntime
+* Scipy
 ```
-pip3 install onnxruntime
+pip3 install scipy
+```
+
+* Pillow
+```
+pip3 install pillow
+```
+
+* tqdm
+```
+pip3 install tqdm
 ```
 
 * PyTorch
@@ -53,6 +57,15 @@ pip3 install onnxruntime
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 sudo apt-get install python3-pip libopenblas-base libopenmpi-dev
 pip3 install torch-1.6.0-cp36-cp36m-linux_aarch64.whl
+```
+
+* TorchVision
+```
+git clone -b v0.7.0 https://github.com/pytorch/vision torchvision
+sudo apt-get install libjpeg-dev zlib1g-dev python3-pip
+cd torchvision
+export BUILD_VERSION=0.7.0
+sudo python3 setup.py install
 ```
 
 ##
