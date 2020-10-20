@@ -7,6 +7,12 @@ Thanks [DanaHan](https://github.com/DanaHan/Yolov5-in-Deepstream-5.0), [wang-xin
 
 ##
 
+Sample video running in FP16 mode (AVG FPS: 9.28): https://youtu.be/IAK-u6Euy_Q
+
+Sample video running in FP32 mode (AVG FPS: 7.92): https://youtu.be/fbOvel0eQMU
+
+##
+
 * [Requirements](#requirements)
 * [Convert PyTorch model to wts file](#convert-pytorch-model-to-wts-file)
 * [Convert wts file to TensorRT model](#convert-wts-file-to-tensorrt-model)
