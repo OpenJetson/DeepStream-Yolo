@@ -406,6 +406,30 @@ static bool NvDsInferParseYoloV4(
     return true;
 }
 
+static NvDsInferParseObjectInfo convertBBoxYoloV5(const float& bx1, const float& by1, const float& bx2,
+                                     const float& by2, const uint& netW, const uint& netH)
+{
+    NvDsInferParseObjectInfo b;
+    // Restore coordinates to network input resolution
+
+    float x1 = bx1 * netW;
+    float y1 = by1 * netH;
+    float x2 = bx2 * netW;
+    float y2 = by2 * netH;
+
+    x1 = clamp(x1, 0, netW);
+    y1 = clamp(y1, 0, netH);
+    x2 = clamp(x2, 0, netW);
+    y2 = clamp(y2, 0, netH);
+
+    b.left = x1;
+    b.width = clamp(x2 - x1, 0, netW);
+    b.top = y1;
+    b.height = clamp(y2 - y1, 0, netH);
+
+    return b;
+}
+
 static void addBBoxProposalYoloV5(const float bx, const float by, const float bw, const float bh,
                      const uint& netW, const uint& netH, const int maxIndex,
                      const float maxProb, std::vector<NvDsInferParseObjectInfo>& binfo)
