@@ -90,7 +90,7 @@ python3 demo_darknet2onnx.py yolov4-tiny.cfg yolov4-tiny.weights ./data/giraffe.
 ##
 
 ### Edit cpp file and compile lib
-1. Add to following functions to /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_Yolo/nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp (or use my edited file available [here](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/examples/yolov4-tiny/nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp); example for default yolo folder)
+1. Add to following functions to nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp located in your deepstream-yolo folder (or use my edited file available [here](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/examples/yolov4-tiny/nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp))
 ```
 static NvDsInferParseObjectInfo convertBBoxYoloV4(const float& bx1, const float& by1, const float& bx2,
                                      const float& by2, const uint& netW, const uint& netH)
