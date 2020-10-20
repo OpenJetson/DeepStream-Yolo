@@ -92,6 +92,12 @@ python3 demo_darknet2onnx.py yolov4-tiny.cfg yolov4-tiny.weights ./data/giraffe.
 ### Edit cpp file and compile lib
 1. Add to following functions to nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp located in your deepstream-yolo folder (or use my edited file available [here](https://github.com/marcoslucianops/DeepStream-Yolo/blob/master/examples/yolov4-tiny/nvdsinfer_custom_impl_Yolo/nvdsparsebbox_Yolo.cpp))
 ```
+extern "C" bool NvDsInferParseCustomYoloV4(
+    std::vector<NvDsInferLayerInfo> const& outputLayersInfo,
+    NvDsInferNetworkInfo const& networkInfo,
+    NvDsInferParseDetectionParams const& detectionParams,
+    std::vector<NvDsInferParseObjectInfo>& objectList);
+
 static NvDsInferParseObjectInfo convertBBoxYoloV4(const float& bx1, const float& by1, const float& bx2,
                                      const float& by2, const uint& netW, const uint& netH)
 {
@@ -170,7 +176,9 @@ decodeYoloV4Tensor(
     return binfo;
 }
 
-extern "C" bool NvDsInferParseCustomYoloV4(
+/* C-linkage to prevent name-mangling */
+
+static bool NvDsInferParseYoloV4(
     std::vector<NvDsInferLayerInfo> const& outputLayersInfo,
     NvDsInferNetworkInfo const& networkInfo,
     NvDsInferParseDetectionParams const& detectionParams,
@@ -184,10 +192,11 @@ extern "C" bool NvDsInferParseCustomYoloV4(
     }
 
     std::vector<NvDsInferParseObjectInfo> objects;
-
+    
     const NvDsInferLayerInfo &boxes = outputLayersInfo[0]; // num_boxes x 4
     const NvDsInferLayerInfo &scores = outputLayersInfo[1]; // num_boxes x num_classes
-
+    const NvDsInferLayerInfo &subbox = outputLayersInfo[2];
+    //* printf("%d\n", subbox.inferDims.numDims);
     // 3 dimensional: [num_boxes, 1, 4]
     assert(boxes.inferDims.numDims == 3);
     // 2 dimensional: [num_boxes, num_classes]
@@ -211,6 +220,18 @@ extern "C" bool NvDsInferParseCustomYoloV4(
 
     return true;
 }
+
+extern "C" bool NvDsInferParseCustomYoloV4(
+    std::vector<NvDsInferLayerInfo> const& outputLayersInfo,
+    NvDsInferNetworkInfo const& networkInfo,
+    NvDsInferParseDetectionParams const& detectionParams,
+    std::vector<NvDsInferParseObjectInfo>& objectList)
+{
+    return NvDsInferParseYoloV4 (
+        outputLayersInfo, networkInfo, detectionParams, objectList);
+}
+
+CHECK_CUSTOM_PARSE_FUNC_PROTOTYPE(NvDsInferParseCustomYoloV4);
 ```
 
 2. Locate your custom yolo folder and compile lib (example for dafault yolo folder and CUDA 10.2)
