@@ -5,7 +5,10 @@ Tested on NVIDIA Jetson Nano
 
 Thanks [Tianxiaomo](https://github.com/Tianxiaomo/pytorch-YOLOv4), [Ersheng](https://forums.developer.nvidia.com/t/get-wrong-infer-results-while-testing-yolov4-on-deepstream-5-0/125526/12) and [AlexeyAB](https://github.com/AlexeyAB/darknet).
 
+##
+
 Sample video running in FP16 mode (AVG FPS: 27.02): https://youtu.be/k0bSI12KVtM
+
 Sample video running in FP32 mode (AVG FPS: 23.07): https://youtu.be/6fL87TJoCtE
 
 ##
