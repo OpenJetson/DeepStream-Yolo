@@ -81,7 +81,7 @@ subdivisions=1
 ##
 
 ### Understanding and editing deepstream_app_config
-To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/dev-guide/index.html#page/DeepStream_Development_Guide/deepstream_app_config.3.2.html)
+To understand and edit deepstream_app_config file, read the [DeepStream SDK Development Guide - Configuration Groups](https://docs.nvidia.com/metropolis/deepstream/5.0DP/dev-guide/index.html#page/DeepStream_Development_Guide/deepstream_app_config.3.2.html)
 
 In this repository have example of deepstream_app_config_yoloV3_tiny.txt file for YoloV3-Tiny.
 
@@ -235,7 +235,7 @@ config-file=config_infer_primary_yoloV3_tiny.txt
 ##
 
 ### Understanding and editing config_infer_primary
-To understand and edit config_infer_primary file, read the [NVIDIA DeepStream Plugin Manual - Gst-nvinfer File Configuration Specifications](https://docs.nvidia.com/metropolis/deepstream/plugin-manual/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.3.01.html#wwpID0E0WDB0HA)
+To understand and edit config_infer_primary file, read the [NVIDIA DeepStream Plugin Manual - Gst-nvinfer File Configuration Specifications](https://docs.nvidia.com/metropolis/deepstream/5.0DP/plugin-manual/index.html#page/DeepStream%20Plugins%20Development%20Guide/deepstream_plugin_details.3.01.html#wwpID0E0WDB0HA)
 
 In this repository have example of config_infer_primary_yoloV3_tiny.txt file for YoloV3-Tiny.
 
