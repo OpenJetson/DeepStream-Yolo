@@ -34,14 +34,9 @@ sudo apt-get install libprotobuf-dev protobuf-compiler
 pip3 install protobuf
 ```
 
-* Cython
+* OpenCV Python
 ```
-pip3 install cython
-```
-
-* Numpy
-```
-pip3 install numpy
+pip3 install opencv-python
 ```
 
 * Onnx
@@ -54,7 +49,7 @@ pip3 install onnx
 pip3 install onnxruntime
 ```
 
-* PyTorch
+* PyTorch (for Jetson plataform)
 ```
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 sudo apt-get install python3-pip libopenblas-base libopenmpi-dev
@@ -263,8 +258,6 @@ deepstream-app -c deepstream_app_config_yoloV4_tiny.txt
 
 **A:** Yes, you can. Do the same steps using YoloV4 files. Remember to edit deepstream_app_config_yoloV4_tiny.txt and config_infer_primary_yoloV4_tiny.txt files to YoloV4.
 
-##
+**Q:** Can I use FP32 in engine?
 
-I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
-
-Sorry for any English error, it is not my native language.
+**A:** Yes, you can. Remove --fp16 from /usr/src/tensorrt/bin/trtexec command.
