@@ -381,9 +381,3 @@ to
 custom-network-config=yolov3-tiny-prn.cfg
 model-file=yolov3-tiny-prn.weights
 ```
-
-##
-
-I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
-
-Sorry for any English error, it is not my native language.
