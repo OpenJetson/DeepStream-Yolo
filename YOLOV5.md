@@ -1,7 +1,7 @@
-# DeepStream YoloV5s
+# DeepStream YoloV5
 NVIDIA DeepStream SDK 5 configuration for YoloV5s
 
-Tested on NVIDIA Jetson Nano
+Example for YoloV5s (Tested on NVIDIA Jetson Nano)
 
 Thanks [DanaHan](https://github.com/DanaHan/Yolov5-in-Deepstream-5.0), [wang-xinyu](https://github.com/wang-xinyu/tensorrtx) and [Ultralytics](https://github.com/ultralytics/yolov5)
 
