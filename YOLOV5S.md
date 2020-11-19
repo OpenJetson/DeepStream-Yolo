@@ -28,14 +28,9 @@ Sample video running in FP32 mode (AVG FPS: 7.92): https://youtu.be/fbOvel0eQMU
 sudo apt-get install python3 python3-dev python3-pip
 ```
 
-* Cython
+* OpenCV
 ```
-pip3 install cython
-```
-
-* Numpy
-```
-pip3 install numpy
+sudo apt-get install libopencv-python
 ```
 
 * Matplotlib
@@ -48,24 +43,19 @@ pip3 install matplotlib
 pip3 install scipy
 ```
 
-* Pillow
-```
-pip3 install pillow
-```
-
 * tqdm
 ```
 pip3 install tqdm
 ```
 
-* PyTorch
+* PyTorch (for Jetson platform)
 ```
 wget https://nvidia.box.com/shared/static/9eptse6jyly1ggt9axbja2yrmj6pbarc.whl -O torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 sudo apt-get install python3-pip libopenblas-base libopenmpi-dev
 pip3 install torch-1.6.0-cp36-cp36m-linux_aarch64.whl
 ```
 
-* TorchVision
+* TorchVision (for Jetson platform)
 ```
 git clone -b v0.7.0 https://github.com/pytorch/vision torchvision
 sudo apt-get install libjpeg-dev zlib1g-dev python3-pip
@@ -80,17 +70,18 @@ sudo python3 setup.py install
 1. Download repositories
 ```
 git clone https://github.com/DanaHan/Yolov5-in-Deepstream-5.0.git yolov5converter
+git clone https://github.com/wang-xinyu/tensorrtx.git
 git clone https://github.com/ultralytics/yolov5.git
 ```
 
-2. Download YoloV5s weights (or use your custom model) to yolov5/weights directory
+2. Download YoloV5s weights to yolov5/weights directory
 ```
 wget https://github.com/ultralytics/yolov5/releases/download/v3.0/yolov5s.pt -P yolov5/weights/
 ```
 
-3. Copy gen_wts.py file (from yolov5converter folder) to yolov5 (ultralytics) folder
+3. Copy gen_wts.py file (from tensorrtx/yolov5 folder) to yolov5 (ultralytics) folder
 ```
-cp yolov5converter/gen_wts.py yolov5/gen_wts.py
+cp tensorrtx/yolov5/gen_wts.py yolov5/gen_wts.py
 ```
 
 4. Generate wts file
@@ -104,26 +95,34 @@ yolov5s.wts file will be generated in yolov5 folder
 ##
 
 ### Convert wts file to TensorRT model
-1. Move generated yolov5s.wts file to yolov5converter folder
+1. Replace yololayer files from tensorrtx/yolov5 folder to yololayer and hardswish files from yolov5converter
 ```
-cp yolov5/yolov5s.wts yolov5converter/yolov5s.wts
+mv yolov5converter/yololayer.cu tensorrtx/yolov5/yololayer.cu
+mv yolov5converter/yololayer.h tensorrtx/yolov5/yololayer.h
+mv yolov5converter/hardswish.cu tensorrtx/yolov5/hardswish.cu
+mv yolov5converter/hardswish.h tensorrtx/yolov5/hardswish.h
 ```
 
-1. Build yolov5converter
+2. Move generated yolov5s.wts file to tensorrtx/yolov5 folder
 ```
-cd yolov5converter
+cp yolov5/yolov5s.wts tensorrtx/yolov5/yolov5s.wts
+```
+
+3. Build tensorrtx/yolov5
+```
+cd tensorrtx/yolov5
 mkdir build
 cd build
 cmake ..
 make
 ```
 
-3. Convert to TensorRT model (yolov5s.engine and libmyplugins.so files will be generated in yolov5converter/build directory)
+4. Convert to TensorRT model (yolov5s.engine and libmyplugins.so files will be generated in tensorrtx/yolov5/build directory)
 ```
 sudo ./yolov5 -s
 ```
 
-4. Copy generated files to custom yolo folder (example for dafault yolo folder)
+5. Copy generated files to custom yolo folder (example for dafault yolo folder)
 ```
 cp yolov5s.engine /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_Yolo/yolov5s.engine
 cp libmyplugins.so /opt/nvidia/deepstream/deepstream-5.0/sources/objectDetector_Yolo/libmyplugins.so
@@ -267,10 +266,4 @@ LD_PRELOAD=./libmyplugins.so deepstream-app -c deepstream_app_config_yoloV5s.txt
 ### FAQ
 **Q:** Can I use others YoloV5 models (YoloV5m, YoloV5l, YoloV5x) on DeepStream?
 
-**A:** I think you can. Do the same steps using your selected YoloV5 file. Remember to edit deepstream_app_config_yoloV5_tiny.txt and config_infer_primary_yoloV5_tiny.txt files to your selected YoloV5.
-
-##
-
-I'm not an expert in DeepStream or Yolo, but I can help in any issue or question.
-
-Sorry for any English error, it is not my native language.
+**A:** You can. See this [link](https://github.com/wang-xinyu/tensorrtx/blob/master/yolov5/README.md#config) and do the same steps using your selected YoloV5 file. Remember to edit deepstream_app_config_yoloV5_tiny.txt and config_infer_primary_yoloV5_tiny.txt files to your selected YoloV5.
