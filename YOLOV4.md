@@ -1,7 +1,7 @@
-# DeepStream YoloV4-Tiny
+# DeepStream YoloV4
 NVIDIA DeepStream SDK 5 configuration for YoloV4-Tiny model
 
-Tested on NVIDIA Jetson Nano
+Example for YoloV4-Tiny (Tested on NVIDIA Jetson Nano)
 
 Thanks [Tianxiaomo](https://github.com/Tianxiaomo/pytorch-YOLOv4), [Ersheng](https://forums.developer.nvidia.com/t/get-wrong-infer-results-while-testing-yolov4-on-deepstream-5-0/125526/12) and [AlexeyAB](https://github.com/AlexeyAB/darknet).
 
